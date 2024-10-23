@@ -79,9 +79,62 @@ namespace PServer
                 }
             });
 
+            //вкс  с  вксов
+            app.MapPost("/weight", async (HttpContext httpContext) =>
+            {
+                var reqdata = new ReqData();
+                var req = httpContext.Request;
+                try
+                {
+                    using (StreamReader reader = new StreamReader(req.Body, Encoding.UTF8, true))
+                    {
+                        var jsonString = await reader.ReadToEndAsync();
+                        reqdata = JsonSerializer.Deserialize<ReqData>(jsonString);
+                    }
+
+
+                    double weight = 0;   //gtodo  получаем вес с весовd
+
+                    var resp = new RespData {
+                        success = true,
+                        weight= weight
+                    };
+                    return JsonSerializer.Serialize(resp);
+
+
+
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+
+                    var resp = new RespData
+                    {
+                        success = false,
+                        error= e.Message
+                    };
+                    return JsonSerializer.Serialize(resp);
+                }
+            });
 
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
     }
+
+    public  class ReqData
+    {
+        public string posid { get; set; }   //id пос терминала (кассового места)
+
+    }
+    public class RespData
+    {
+        public double weight { get; set; }   //вес  с электронных весов
+        public bool success { get; set; }  //true если  нет ощибок
+        public string error { get; set; }  //сообщение об ошиьке
+
+
+    }
+
 }
