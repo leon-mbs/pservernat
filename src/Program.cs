@@ -21,6 +21,11 @@ namespace PServer
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+            app.MapGet("/check", async (HttpContext httpContext) =>
+            {
+                return "POS server: OK";
+            });
+
             app.MapPost("/print", async (HttpContext httpContext) =>
             {
                 ESC_POS_USB_NET.Printer.Printer printer = new ESC_POS_USB_NET.Printer.Printer(PrinterName, "cp866");
