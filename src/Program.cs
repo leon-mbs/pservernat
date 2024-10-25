@@ -21,6 +21,8 @@ namespace PServer
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+
+            //проверка  что  запущке
             app.MapGet("/check", async (HttpContext httpContext) =>
             {
                 return "POS server: OK";
@@ -56,6 +58,7 @@ namespace PServer
                 }
             });
 
+            //тест  с  браузера
             app.MapGet("/testprint", async (HttpContext httpContext) =>
             {
                 try
@@ -65,6 +68,28 @@ namespace PServer
                     printer.Append("Test printer");
                     printer.Append("Тест принтера");
                     printer.Append(new byte[] { 0x0a });
+                    printer.PrintDocument();
+                    printer.Clear();
+                    Console.WriteLine("Тeст принтера");
+                    return "Тeст принтера";
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+
+                    return e.Message;
+                }
+            });
+            //тест  с  браузера для  режима label
+            app.MapGet("/testprintlabel", async (HttpContext httpContext) =>
+            {
+                try
+                {
+                    ESC_POS_USB_NET.Printer.Printer printer = new ESC_POS_USB_NET.Printer.Printer(PrinterName, "cp866");
+
+                    printer.Append("TEXT 10,10,\"2\",0,1,1,\"Test printer\"");
+                    printer.Append("PRINT 1,1");
                     printer.PrintDocument();
                     printer.Clear();
                     Console.WriteLine("Тeст принтера");
@@ -132,7 +157,7 @@ namespace PServer
     {
         public double weight { get; set; }   //вес  с электронных весов
         public bool success { get; set; }  //true если  нет ощибок
-        public string error { get; set; }  //сообщение об ошиьке
+        public string? error { get; set; }  //сообщение об ошиьке
 
 
     }
