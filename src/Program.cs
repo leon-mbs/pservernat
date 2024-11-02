@@ -115,7 +115,7 @@ namespace PServer
                 {
                      
 
-                    double weight = 55;   //gtodo  получаем вес с весовd
+                    double weight = 0;   //gtodo  получаем вес с весовd
 
                     var resp = new RespData {
                         success = true,
