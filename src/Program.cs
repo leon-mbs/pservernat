@@ -88,6 +88,8 @@ namespace PServer
                 {
                     ESC_POS_USB_NET.Printer.Printer printer = new ESC_POS_USB_NET.Printer.Printer(PrinterName, "cp866");
 
+                    printer.Append("CLS");
+                    printer.Append("DIRECTION 1");
                     printer.Append("TEXT 10,10,\"2\",0,1,1,\"Test printer\"");
                     printer.Append("PRINT 1,1");
                     printer.PrintDocument();
@@ -105,20 +107,15 @@ namespace PServer
             });
 
             //вкс  с  вксов
-            app.MapPost("/weight", async (HttpContext httpContext) =>
+            app.MapGet("/weight", async (HttpContext httpContext) =>
             {
-                var reqdata = new ReqData();
+               
                 var req = httpContext.Request;
                 try
                 {
-                    using (StreamReader reader = new StreamReader(req.Body, Encoding.UTF8, true))
-                    {
-                        var jsonString = await reader.ReadToEndAsync();
-                        reqdata = JsonSerializer.Deserialize<ReqData>(jsonString);
-                    }
+                     
 
-
-                    double weight = 0;   //gtodo  получаем вес с весовd
+                    double weight = 55;   //gtodo  получаем вес с весовd
 
                     var resp = new RespData {
                         success = true,
@@ -142,7 +139,47 @@ namespace PServer
                     return JsonSerializer.Serialize(resp);
                 }
             });
+            
+            /*
+            app.MapPost("/weight", async (HttpContext httpContext) =>
+            {
+                var reqdata = new ReqData();
+                var req = httpContext.Request;
+                try
+                {
+                    using (StreamReader reader = new StreamReader(req.Body, Encoding.UTF8, true))
+                    {
+                        var jsonString = await reader.ReadToEndAsync();
+                        reqdata = JsonSerializer.Deserialize<ReqData>(jsonString);
+                    }
 
+
+                    double weight = 55;   //gtodo  получаем вес с весовd
+
+                    var resp = new RespData
+                    {
+                        success = true,
+                        weight = weight
+                    };
+                    return JsonSerializer.Serialize(resp);
+
+
+
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+
+                    var resp = new RespData
+                    {
+                        success = false,
+                        error = e.Message
+                    };
+                    return JsonSerializer.Serialize(resp);
+                }
+            });
+            */
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
