@@ -87,7 +87,8 @@ namespace PServer
                 try
                 {
                     ESC_POS_USB_NET.Printer.Printer printer = new ESC_POS_USB_NET.Printer.Printer(PrinterName, "cp866");
-
+                   
+                   
                     printer.Append("CLS");
                     printer.Append("DIRECTION 1");
                     printer.Append("TEXT 10,10,\"2\",0,1,1,\"Test printer\"");
