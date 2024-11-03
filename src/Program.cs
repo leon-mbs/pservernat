@@ -141,7 +141,7 @@ namespace PServer
             });
 
              
-            app.MapPost("/bank", async (HttpContext httpContext) =>
+            app.MapPost("/bankpay", async (HttpContext httpContext) =>
             {
                 var reqdata = new ReqBankData();
                 var req = httpContext.Request;
@@ -187,15 +187,17 @@ namespace PServer
 
     public  class ReqBankData
     {
-        public string mfo { get; set; }   
+        public string mfo { get; set; }
+        public double amount { get; set; }
+        public string account { get; set; }
 
     }
     public class RespData
     {
-        public double weight { get; set; }   //вес  с электронных весов
         public bool success { get; set; }  //true если  нет ощибок
         public string? error { get; set; }  //сообщение об ошиьке
-
+        public int? tranid { get; set; }   //вес  с электронных весов
+        public double? weight { get; set; }   //вес  с электронных весов
 
     }
 
