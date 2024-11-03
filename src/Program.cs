@@ -107,7 +107,7 @@ namespace PServer
             });
 
             //вкс  с  вксов
-            app.MapGet("/weight", async (HttpContext httpContext) =>
+            app.MapGet("/scale", async (HttpContext httpContext) =>
             {
                
                 var req = httpContext.Request;
@@ -139,18 +139,18 @@ namespace PServer
                     return JsonSerializer.Serialize(resp);
                 }
             });
-            
-            /*
-            app.MapPost("/weight", async (HttpContext httpContext) =>
+
+             
+            app.MapPost("/bank", async (HttpContext httpContext) =>
             {
-                var reqdata = new ReqData();
+                var reqdata = new ReqBankData();
                 var req = httpContext.Request;
                 try
                 {
                     using (StreamReader reader = new StreamReader(req.Body, Encoding.UTF8, true))
                     {
                         var jsonString = await reader.ReadToEndAsync();
-                        reqdata = JsonSerializer.Deserialize<ReqData>(jsonString);
+                        reqdata = JsonSerializer.Deserialize<ReqBankData>(jsonString);
                     }
 
 
@@ -179,15 +179,15 @@ namespace PServer
                     return JsonSerializer.Serialize(resp);
                 }
             });
-            */
+           
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
     }
 
-    public  class ReqData
+    public  class ReqBankData
     {
-        public string posid { get; set; }   //id пос терминала (кассового места)
+        public string mfo { get; set; }   
 
     }
     public class RespData
