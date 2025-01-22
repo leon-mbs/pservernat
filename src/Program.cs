@@ -104,7 +104,15 @@ namespace PrintServer
             {
                 return "Server OK";
             });
-   
+           
+            app.MapGet("/scale", async (HttpContext httpContext) =>
+            {
+               return  Results.Json(new { weight = 0, success=true });
+
+          //      if error  return Results.Json(new { error = "error", success = false });
+
+            });
+
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
