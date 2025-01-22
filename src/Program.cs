@@ -11,7 +11,7 @@ namespace PrintServer
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Console.WriteLine("Statrted...");
+            Console.WriteLine("Started...");
             string docPath= AppContext.BaseDirectory ;
  
 
@@ -57,7 +57,7 @@ namespace PrintServer
                 }
             });
 
-            app.MapGet("/test", async (HttpContext httpContext) =>
+            app.MapGet("/testprintlabel", async (HttpContext httpContext) =>
             {
                 try
                 {
@@ -79,7 +79,7 @@ namespace PrintServer
                     return e.Message;
                 }
             });
-            app.MapGet("/label", async (HttpContext httpContext) =>
+            app.MapGet("/testprintlabel", async (HttpContext httpContext) =>
             {
                 try
                 {
@@ -101,7 +101,7 @@ namespace PrintServer
                 }
             });
 
-            
+            app.UseHttpsRedirection();
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
