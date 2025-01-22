@@ -101,7 +101,7 @@ namespace PrintServer
                 }
             });
 
-
+            
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
