@@ -100,8 +100,11 @@ namespace PrintServer
                     return e.Message;
                 }
             });
-
-            app.UseHttpsRedirection();
+            app.MapGet("/check", async (HttpContext httpContext) =>
+            {
+                return "Server OK";
+            });
+   
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.Run();
         }
